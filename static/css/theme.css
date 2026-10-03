@@ -399,6 +399,8 @@ button:hover, .btn:hover { background: #1e293b; }
 }
 .data-table th { background: #e2e8f0; color: var(--slate); font-size: 0.9rem; }
 .data-table a { color: var(--lime-mid); font-weight: 600; }
+.rename-row { display: flex; gap: 8px; align-items: center; }
+.rename-row input { min-width: 140px; }
 .badge {
   display: inline-block;
   padding: 3px 8px;
