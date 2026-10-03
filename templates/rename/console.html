@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}池号更名台{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>池号更名台</h1>
+    <p>仅管理员可更名；新池号不得与同厂既有池号重复，更名只改池号、不动池态。</p>
+  </div>
+  <a class="btn ghost" href="{{ url_for('board.floor_plan') }}">返回平面图</a>
+</header>
+<table class="data-table rename-table">
+  <thead>
+    <tr>
+      <th>厂区</th>
+      <th>当前池号</th>
+      <th>当前状态</th>
+      <th>新池号</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pond in ponds %}
+    <tr>
+      <td>{{ pond.plant.name }}</td>
+      <td><strong>{{ pond.code }}</strong></td>
+      <td><span class="badge badge-{{ pond.status }}">{{ status_labels.get(pond.status, pond.status) }}</span></td>
+      <td>
+        <form id="rename-form-{{ pond.id }}" method="post" action="{{ url_for('rename.rename_pond', pond_id=pond.id) }}"></form>
+        <input
+          form="rename-form-{{ pond.id }}"
+          class="rename-input"
+          name="new_code"
+          value="{{ pond.code }}"
+          required
+          maxlength="40"
+          aria-label="新池号"
+        />
+      </td>
+      <td><button form="rename-form-{{ pond.id }}" type="submit">更名</button></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">暂无熟化池</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

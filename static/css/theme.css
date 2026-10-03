@@ -420,6 +420,9 @@ button:hover, .btn:hover { background: #1e293b; }
 }
 .actions { display: flex; gap: 10px; align-items: center; }
 
+.rename-table td strong { letter-spacing: 0.04em; }
+.rename-input { width: 150px; }
+
 @media (max-width: 720px) {
   .topbar, .ops-main { padding-left: 16px; padding-right: 16px; }
   .floor-head { flex-direction: column; }

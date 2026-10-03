@@ -68,13 +68,13 @@ def edit_pond(pond_id: int):
     plants = Plant.query.order_by(Plant.name).all()
     if request.method == "POST":
         plant_id = int(request.form["plant_id"])
-        code = (request.form.get("code") or "").strip()
         status = request.form.get("status") or pond.status
         capacity = float(request.form.get("capacity_m3") or 0)
         notes = (request.form.get("notes") or "").strip()
+        # 池号只能在「池号更名台」由管理员修改；此处仅防止跨厂调动撞号
         dup = Pond.query.filter(
             Pond.plant_id == plant_id,
-            Pond.code == code,
+            Pond.code == pond.code,
             Pond.id != pond.id,
         ).first()
         if dup:
@@ -83,7 +83,6 @@ def edit_pond(pond_id: int):
             try:
                 assert_can_set_pond_status(pond, status)
                 pond.plant_id = plant_id
-                pond.code = code
                 pond.status = status
                 pond.capacity_m3 = capacity
                 pond.notes = notes

@@ -15,9 +15,16 @@
       {% endfor %}
     </select>
   </label>
+  {% if pond %}
   <label>池号
-    <input name="code" value="{{ pond.code if pond else '' }}" required />
+    <input value="{{ pond.code }}" disabled />
   </label>
+  <p class="hint">池号只能在「池号更名台」由管理员更改，本页保存不影响池号。</p>
+  {% else %}
+  <label>池号
+    <input name="code" value="" required />
+  </label>
+  {% endif %}
   <label>状态
     <select name="status" data-form-hint-target="status">
       {% for key, label in status_labels.items() %}
